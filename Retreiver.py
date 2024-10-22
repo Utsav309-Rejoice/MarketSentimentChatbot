@@ -98,10 +98,8 @@ Answer_Generative_Tool = FunctionTool.from_defaults(fn=Generate_Answer_From_Node
 
 chatter = ReActAgent.from_tools(tools=[Create_Filter_tool,Check_All_Node_Tool,Answer_Generative_Tool],llm=llm,verbose=True)
 
-while(True):
-    query = input("---")
-    if query == 'q':
-        break
-    Filtered_Nodes = []
+if query := st.chat_input("Ask about market-sentiments?"):
+    st.chat_message("user").markdown(query)
     response = chatter.chat(prompt_for_react_agent.format(user_query=query))
-    print(response)
+    with st.chat_message("assistant"):
+        st.markdown(response)
